@@ -1,0 +1,55 @@
+<h1>Welcome to my program that will help you organize the companies you wish to apply to in your wish list.</h1>
+
+{% if current_user.is_authenticated %}
+    {% block content %}
+  <h1>Where are you looking to apply?</h1>
+  <form method="POST" action="http://localhost:5000/result">
+      {{ form.hidden_tag() }}
+      {% for message in get_flashed_messages() %}
+      {{ message }}
+      {% endfor %}
+      <p>{{ form.text.label }}{{ form.text() }}</p>
+      <p>{{ form.location.label }}{{ form.location() }}</p>
+      {{ form.submit() }}
+  </form>
+{% endblock %}
+
+<h2>Your List:</h2>
+<button onclick="loadList()">Load List</button>
+<ul id="list"></ul>
+
+<!--
+{% for company in users_comps %}
+<p>{{company.Company.name}} in {{ company.Location.state }}</p>
+{% endfor %}
+-->
+
+<script>
+function loadList() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "/userlist", false);
+  xhttp.send();
+  var wish_list = JSON.parse(xhttp.responseText).wish_list;
+  for (x = 0; x < wish_list.length; x++) {
+    var node = document.createElement("LI");
+    var textnode = document.createTextNode(wish_list[x].company_name + " in " + wish_list[x].company_state);
+    node.appendChild(textnode);
+    document.getElementById("list").appendChild(node);
+  }
+}
+</script>
+
+<h2>Resume Upload</h2>
+  <form method=post action="upload_resume" enctype=multipart/form-data>
+    <p><input type=file name=file>
+       <input type=submit value=Upload>
+</form>
+<a href="/my_resume">View my resume if uploaded</a>
+<br>
+<br>
+<a href="{{ url_for('logout') }}">Sign Out {{current_user.email}}</a>
+{% else %}
+    <a href="{{ url_for('login') }}">Sign In</a>
+{% endif %}
+<br>
+

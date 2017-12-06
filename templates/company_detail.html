@@ -1,0 +1,21 @@
+<h1>{{ company["name"]}}</h1>
+{% if 'featuredReview' in company %}
+<h3>Review from {{company["featuredReview"]["jobTitle"]}} in {{ company["featuredReview"]["location"]}}</h3>
+{% endif %}
+ <img src="{{company['squareLogo']}}"/>
+ <p>Overall rating: {{company['overallRating']}}</p>
+ {% if 'featuredReview' in company %}
+ <h2>Featured Review</h2>
+ <h3>Pros</h3>
+ <p>{{company['featuredReview']['pros']}}
+ <h3>Cons</h3>
+ <p>{{company['featuredReview']['cons']}}
+{% endif %}
+ <form method="POST">
+      {{ form.hidden_tag() }}
+      {% for message in get_flashed_messages() %}
+      {{ message }}
+      {% endfor %}
+      {{ form.addToWishList() }}
+  </form>
+  <a href="/">Back to search</a>

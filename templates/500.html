@@ -1,0 +1,7 @@
+{% extends "error.html" %}
+
+{% block content %}
+    <h1>Uh oh! An unexpected error has occurred</h1>
+    <p>The administrator has been notified. Sorry for any inconvenience this may cause!</p>
+    <p><a href="{{ url_for('form') }}">Back</a></p>
+{% endblock %}

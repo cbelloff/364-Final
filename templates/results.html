@@ -1,0 +1,16 @@
+{% if companies|length >= 1%}
+<h2>Click on one of the company names below in order to see some of the featured reviews for that company. Once you click on the company name, you will have the option to add it to your wish list.</h2>
+<ul>
+	 
+    {% for company in companies %}
+        <a href="/company/{{ company["name"]}}/{{location}}"><h3>{{ company["name"]}}</h3></a>
+        <img src="{{company['squareLogo']}}"/>
+        <p>Overall rating: {{company['overallRating']}}</p>
+    </li>
+    {% endfor %}
+    <a href="/">Back to search</a>
+</ul>
+{% else %}
+ <a href="/">Back to search</a>
+<p>No companies matched that search!</p>
+{% endif %}
